@@ -1,16 +1,34 @@
 import { useState } from "react";
 import AuthLogin from "../../components/layout/AuthLogin";
 import Input from "../../components/Input/Input";
+import {Link } from "react-router-dom"
+import {validateEmail} from "../../utils/helper"
+
+
+
 
 export default function Login(){
     const [email,setEmail]= useState();
-    const handleLogin= async (e)=>{
-            e.preventDefault();
-            console.log(e.target)
-    }
-
+    const [error,setError]=useState(null);
     const [password,setPassword]= useState()
    
+      const handleLogin= async (e)=>{
+            e.preventDefault();
+    
+    if(!validateEmail(email)){
+        setError("Enter a Valid Email!");
+        return;
+    }
+    if(!password){
+        setError("Enter a Valid Password");
+        return;
+    }
+    setError('')
+
+    //api to login
+
+
+    }
    
     return (
         <AuthLogin>  
@@ -18,7 +36,7 @@ export default function Login(){
                 <h3 className="text-xl font-semibold text-red-800 ">Welcome Back!</h3>
                 <p className="text-xs font-bold mt-5px   mb-[5px]  text-amber-900">Enter the Details to Log In</p>
            
-                <form onSubmit={handleLogin}>
+                <form   onSubmit={handleLogin}>
                         <Input 
                     value={email}
                     label="Email Address"
@@ -34,6 +52,13 @@ export default function Login(){
                     placeholder={'min 8 Charecters'}
                     type="password"
                 />
+                {error && <p className="text-red-300 text-xs pb-2.5">{error}</p> }
+                    <button type="submit" className="btn-primary">Login</button>
+              
+                <p>Don't have a Account?
+                <Link to="/signup" className="font-medium text-red-600 underline">SignUP</Link>
+                
+                </p>
                 </form>
                 
             </div>

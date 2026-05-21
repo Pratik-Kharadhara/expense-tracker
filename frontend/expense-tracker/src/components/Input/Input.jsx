@@ -12,10 +12,10 @@ export default function Input(props){
    
    
     return (
-        <div> 
+        <div >  
             <label htmlFor="">{props.label}</label>
            
-            
+            <div className="input-box">
             <input 
             className="flex"
             type={ props.type == "password" ? showPassword ? 'text' : 'password' : props.type}  //If the input type is password, toggle between hidden ('password') and visible ('text'); otherwise use the given type normally
@@ -23,7 +23,9 @@ export default function Input(props){
                 onChange={props.onChange}
                 placeholder={props.placeholder}
                 value={props.value}
-                onChange = {(e)=>onchange(e)}
+                size={48}
+                              
+
             />
             {
                 props.type === "password" && 
@@ -41,7 +43,7 @@ export default function Input(props){
                     />
                 )
             }
-
+            </div>
         </div>
     )
 }
