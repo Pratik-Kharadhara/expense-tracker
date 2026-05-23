@@ -55,7 +55,7 @@ export default function Login(){
                 {error && <p className="text-red-300 text-xs pb-2.5">{error}</p> }
                     <button type="submit" className="btn-primary">Login</button>
               
-                <p>Don't have a Account?
+                <p className="mt-4">Don't have a Account?
                 <Link to="/signup" className="font-medium text-red-600 underline">SignUP</Link>
                 
                 </p>

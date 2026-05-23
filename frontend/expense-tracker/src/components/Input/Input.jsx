@@ -17,13 +17,12 @@ export default function Input(props){
            
             <div className="input-box">
             <input 
-            className="flex"
+            className="w-full flex-1 bg-transparent border-0 outline-none focus:outline-none focus:ring-0"
             type={ props.type == "password" ? showPassword ? 'text' : 'password' : props.type}  //If the input type is password, toggle between hidden ('password') and visible ('text'); otherwise use the given type normally
                 //value={props.value}
                 onChange={props.onChange}
                 placeholder={props.placeholder}
                 value={props.value}
-                size={48}
                               
 
             />

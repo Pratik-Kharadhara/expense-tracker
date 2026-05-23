@@ -2,7 +2,7 @@
 import './App.css'
 import {Route,Routes,Router,Navigate} from "react-router-dom"
 import Login from './pages/auth/login'
-import SignUp from './pages/auth/signin'
+import SignUp from './pages/auth/SignUp'
 import Home from './pages/dashboard/home'
 import Expense from './pages/dashboard/Expense'
 import Income from './pages/dashboard/Income'
