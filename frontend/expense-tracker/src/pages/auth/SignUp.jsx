@@ -58,7 +58,7 @@ export default function SignUp(){
         
                                  <Input 
                             value={password}
-                            label="Pass Word"
+                            label="Password"
                             onChange={(e)=>setPassword(e.target.value)}
                             placeholder={'min 8 Charecters'}
                             type="password"
@@ -67,7 +67,7 @@ export default function SignUp(){
                     <button type="submit" className="btn-primary">SignUp</button>
 
                             <p className="mt-4">Already have a Account?
-                            <Link to="/login" className="font-medium text-red-600 underline">Login</Link>
+                            <Link to="/login" className="font-medium text-red-600 underline"> Login</Link>
                 
                             </p>
               
