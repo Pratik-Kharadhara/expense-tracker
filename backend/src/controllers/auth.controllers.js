@@ -126,14 +126,16 @@ catch(err){
 
 const foundUser= async (req,res)=>{
    try{
-    const foundUser = userModel.findById(req.user.id).select('-password')
+    const foundUser = await userModel.findById(req.user.id).select('-password')
 
     if(!foundUser){
         return res.status(404).json({
             message:"user not found"
         })
     }
-    res.status(200).json(foundUser);
+    res.status(200).json({
+        message:"User Found!",
+        user:foundUser});
 
    }
    catch(err){
@@ -143,6 +145,6 @@ const foundUser= async (req,res)=>{
     })
    }
     
-    
+
 }
-module.exports = {signUp,login,foundUser}
+module.exports = {signUp,login,foundUser} ; 
