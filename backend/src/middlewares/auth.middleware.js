@@ -5,7 +5,7 @@ const authMiddleWare=async (req,res,next)=>{
     //check if there is token or not
         const token = req.cookies.token;
 
-        if(!token){ī
+        if(!token){
             res.status(401).json({
                 message:"token not recieved"
             })

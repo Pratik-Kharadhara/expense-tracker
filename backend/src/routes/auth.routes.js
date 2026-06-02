@@ -16,8 +16,7 @@ router.post('/upload-image',upload.single('image'),(req,res)=>{
             })
         }
         console.log(req.file)
-        const imageUrl = `${req.protocol}://${req.get("host")}/uploads/
-        ${req.file.filename}`
+        const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
 
         res.status(201).json({
             message:"succesfulle updated the profile photo",
