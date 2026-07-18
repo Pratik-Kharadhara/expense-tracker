@@ -1,7 +1,7 @@
 
 const incomeModel = require('../models/Income');
 
-const addIncome=async (req,res)=>{
+const addIncome = async (req,res)=>{
         const userId = req.user.id;
 
         try{
@@ -34,4 +34,18 @@ const addIncome=async (req,res)=>{
         }
 }
 
-module.exports = {addIncome}
+const findAllIncome = async(req,res)=>{
+    const userId = req.user.id ;
+    try{
+        const income = (await incomeModel.find({userId})).sort({date:-1});
+        res.json(income);
+    }
+    catch(e){
+        res.status(500).json({
+            message : "server error",
+            error :e
+        })
+        }
+}
+
+module.exports = {addIncome , findAllIncome}

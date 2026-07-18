@@ -14,6 +14,7 @@ app.use(cookieParser())
 app.use('/api/auth',authRouter);
 app.use('/api/income',incomeRouter);
 
+
 //serve the image url
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
