@@ -7,8 +7,8 @@ const authMiddleWare = require('../middlewares/auth.middleware')
 
 //creating all differenet expense method 
 router.post('/addincome',authMiddleWare,incomeController.addIncome);
-router.post('/findAllIncomes',authMiddleWare,incomeController.findAllIncome);
-
-
+router.get('/findAllIncomes',authMiddleWare,incomeController.findAllIncome);
+router.delete('/:id',authMiddleWare,incomeController.deleteIncome);
+router.get('/excellDownload',authMiddleWare,incomeController.excellFile);
 
 module.exports = router;
