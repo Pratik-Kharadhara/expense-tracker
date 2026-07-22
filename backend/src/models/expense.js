@@ -7,13 +7,13 @@ const expenseSchema = new mongoose.Schema({
         required:true
     },
     source:{
-        tyepe:String ,required:true
+        type:String ,required:true
     },
     amount :{type:Number ,required:true},
     date:{
-        type:Number,
+        type:Date,
         required:true
     }
-})
+},{timestamps:true})
 
-module.exports=mongoose.model('expense',expenseSchema);
+module.exports = mongoose.model('expense',expenseSchema);
