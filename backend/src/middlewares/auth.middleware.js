@@ -6,7 +6,7 @@ const authMiddleWare=async (req,res,next)=>{
         const token = req.cookies.token;
 
         if(!token){
-            res.status(401).json({
+            return res.status(401).json({
                 message:"token not recieved"
             })
         }
@@ -17,6 +17,12 @@ const authMiddleWare=async (req,res,next)=>{
         //saving the info we will get by the id of decod for the token
         //and sending it to the req.user
         req.user = await userModel.findById(decode.id).select('-password')
+
+        if(!req.user){
+            return res.status(401).json({
+                message:"token user not found"
+            })
+        }
 
         next();
 

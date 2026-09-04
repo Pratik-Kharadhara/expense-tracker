@@ -16,7 +16,7 @@ app.use(cookieParser())
 app.use('/api/auth',authRouter);
 app.use('/api/income',incomeRouter);
 app.use('/api/expense',expenseRouter);
-app.use('/')
+app.use('/api/dashboard',dashbordRouter);
 
 
 //serve the image url
