@@ -5,9 +5,13 @@ const expenseRouter = require('./routes/expense.route');
 const dashbordRouter = require('./routes/dashboard.routes')
 const cookieParser = require('cookie-parser');
 const path = require('path')
+const cors = require('cors');
 
 const app = express();
-
+//cors setup 
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 //middlewares
 app.use(express.json());//to use the json sent by the req
 app.use(cookieParser())

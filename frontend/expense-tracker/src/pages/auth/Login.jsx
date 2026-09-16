@@ -1,9 +1,11 @@
 import { useState } from "react";
 import AuthLogin from "../../components/layout/AuthLogin";
 import Input from "../../components/Input/Input";
-import {Link } from "react-router-dom"
+import {Link, Navigate } from "react-router-dom"
 import {validateEmail} from "../../utils/helper"
-
+import axiosInstance from "../../utils/axiosPath";
+import { API_PATHS } from "../../utils/apiPath";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -11,7 +13,7 @@ export default function Login(){
     const [email,setEmail]= useState();
     const [error,setError]=useState(null);
     const [password,setPassword]= useState()
-   
+   const navigate = useNavigate();
       const handleLogin= async (e)=>{
             e.preventDefault();
     
@@ -26,7 +28,26 @@ export default function Login(){
     setError('')
 
     //api to login
-
+    try{
+        const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN , {
+            email,
+            password,
+        });
+        const {token} = response.data;
+        //console.log("i am reaching here",token)
+        if(token) {
+            localStorage.setItem("token",token);
+              navigate("/dashboard");
+        }
+    }
+    catch(error){
+        if(error.resonse && error.resonse.data.message){
+            setError(error.reponse.data.message)
+        }
+        else{
+            setError("Something went wrong please try again later")
+        }
+    }
 
     }
    

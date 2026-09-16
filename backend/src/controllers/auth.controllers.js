@@ -111,7 +111,7 @@ const login = async (req,res)=>{
         user:{
             name:userExist.fullname,
             email: userExist.email
-        }
+        },token
     })
    }
 catch(err){
