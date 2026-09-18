@@ -6,7 +6,8 @@ import {validateEmail} from "../../utils/helper"
 import axiosInstance from "../../utils/axiosPath";
 import { API_PATHS } from "../../utils/apiPath";
 import { useNavigate } from "react-router-dom";
-
+import { UserContext  } from "../../context/UserContext";
+import {useContext} from "react"
 
 
 export default function Login(){
@@ -14,13 +15,15 @@ export default function Login(){
     const [error,setError]=useState(null);
     const [password,setPassword]= useState()
    const navigate = useNavigate();
+    const {updateUser } = useContext(UserContext);
+
       const handleLogin= async (e)=>{
             e.preventDefault();
     
     if(!validateEmail(email)){
         setError("Enter a Valid Email!");
         return;
-    }
+     }
     if(!password){
         setError("Enter a Valid Password");
         return;
@@ -33,10 +36,11 @@ export default function Login(){
             email,
             password,
         });
-        const {token} = response.data;
+        const {token,user} = response.data;
         //console.log("i am reaching here",token)
         if(token) {
             localStorage.setItem("token",token);
+            updateUser(user)
               navigate("/dashboard");
         }
     }

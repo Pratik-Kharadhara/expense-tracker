@@ -6,10 +6,13 @@ import SignUp from './pages/auth/SignUp'
 import Home from './pages/dashboard/Home'
 import Expense from './pages/dashboard/Expense'
 import Income from './pages/dashboard/Income'
+import UserProvider from './context/UserContext'
 
 export default function App() {
 return (
-  <div>
+ 
+  <UserProvider>
+ <div>
        
          <Routes>
             <Route path='/' element={<Root/>}/>
@@ -22,6 +25,7 @@ return (
     
 
   </div>
+</UserProvider>
 )
 }
 
