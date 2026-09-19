@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import uploadImage from "../../utils/uploadImage";
 export default function SignUp(){
-    const [userName,setName] = useState("");
+    const [fullname,setName] = useState("");
     const [password,setPassword]= useState("");
     const [email,setEmail]=useState("");
     const [error,setError]=useState(null)
@@ -19,10 +19,10 @@ export default function SignUp(){
 
     const navigate = useNavigate();
     const { updateUser} = useContext(UserContext);
-
+    
     const handleSignUp=async (e)=>{
         e.preventDefault();
-         
+         let profileImageUrl = '';
     if(!validateEmail(email)){
         setError("Enter a Valid Email!");
         return;
@@ -31,7 +31,7 @@ export default function SignUp(){
         setError("Enter a Valid Password");
         return;
     }
-    if(!userName){
+    if(!fullname){
         setError("Enter a Valid User Name");
         return;
     }
@@ -43,18 +43,20 @@ export default function SignUp(){
         //upload image if presnet
         if(image){
             const imgUploadRes = await uploadImage(image);
+            profileImageUrl = imgUploadRes.imageUrl || "";
             
         }
         const response = await axiosInstance.post(API_PATHS.AUTH.SIGNUP,{
-            userName,
+            fullname,
             email,
-            password
+            password,
+            profileImageUrl
         });
         const {token,user}= response.data;
         if(token){
             localStorage.setItem("token",token);
             updateUser(user);
-            navigate('/dashboard')
+            navigate("/home")
         }
     }
     catch(error){
@@ -78,7 +80,7 @@ export default function SignUp(){
             
             
             <Input
-            value={userName}
+            value={fullname}
             label="User Name"
             placeholder="Enter Your Full Name"
             onChange={(e)=>setName(e.target.value)}

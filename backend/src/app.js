@@ -9,9 +9,7 @@ const cors = require('cors');
 
 const app = express();
 //cors setup 
-app.use(cors({
-    origin: "http://localhost:5173"
-}))
+app.use(cors());
 //middlewares
 app.use(express.json());//to use the json sent by the req
 app.use(cookieParser())
