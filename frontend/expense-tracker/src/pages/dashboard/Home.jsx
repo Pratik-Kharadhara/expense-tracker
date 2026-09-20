@@ -1,7 +1,8 @@
+import DashBoardLayout from "../../components/layout/DashBoardLayout"
 export default function Home(){
     return (
-        <>  
-        <h1>home</h1>
-        </>
+        <DashBoardLayout activeMenu="Dashboard">
+            <div className="my-5 mx-auto"></div>  
+        </DashBoardLayout>
     )
 }
