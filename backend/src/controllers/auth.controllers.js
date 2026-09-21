@@ -72,7 +72,7 @@ const login = async (req,res)=>{
     const {email,password} = req.body;
 
     if(!email || !password){
-        res.status(400).json({
+        return res.status(400).json({
             message:"Every Field is required"
         })
     }
@@ -81,7 +81,7 @@ const login = async (req,res)=>{
     const userExist = await userModel.findOne({email});
 
     if(!userExist){
-        res.status(401).json({
+        return res.status(401).json({
             message:"user not found"
         })
     }
@@ -94,7 +94,7 @@ const login = async (req,res)=>{
 
     if(!isPassCorrect){
         console.log("i am reaching passincorrect")
-        res.status(401).json({
+        return res.status(401).json({
             message:"password is not correct enter a valid one"
         })
     }

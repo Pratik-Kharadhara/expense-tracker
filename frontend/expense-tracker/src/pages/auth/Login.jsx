@@ -45,8 +45,8 @@ export default function Login(){
         }
     }
     catch(error){
-        if(error.resonse && error.resonse.data.message){
-            setError(error.reponse.data.message)
+        if(error.response?.data?.message){
+            setError(error.response.data.message)
         }
         else{
             setError("Something went wrong please try again later")

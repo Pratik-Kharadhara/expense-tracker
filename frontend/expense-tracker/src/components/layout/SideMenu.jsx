@@ -24,11 +24,15 @@ export default function SideMenu({activeMenu}){
     return(
         <div className="w-64 min-h-[calc(100vh-61px)] bg-white border-r border-amber-600 p-5 sticky top-[61px] z-20">
             <div className="flex flex-col items-center justify-center mt-7 mb-6">
-                {user?.profileImageUrl ? (
+                {!user?.profileImageUrl ? (
                     <img src={user?.profileImageUrl || ""}
                      alt="Profile Image"
                      className="w-16 h-16 rounded-full object-cover mb-3"
-                     /> ): <></>
+                     /> ): <CharAvatar
+                     fullName={fullName}
+                     width="w-20"
+                     height="h-20"
+                     style="text-xl"/>
                 }
                 <h5 className="font-medium text-center">
                     {user?.fullName || ""}
