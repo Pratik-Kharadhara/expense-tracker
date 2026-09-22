@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AuthLogin from "../../components/layout/AuthLogin";
 import Input from "../../components/Input/Input";
-import {Link, Navigate } from "react-router-dom"
+import {Link } from "react-router-dom"
 import {validateEmail} from "../../utils/helper"
 import ProfilePhotoSelecter from "../../components/Input/ProfilePhotoSelecter";
 import axiosInstance from "../../utils/axiosPath";
@@ -56,7 +56,7 @@ export default function SignUp(){
         if(token){
             localStorage.setItem("token",token);
             updateUser(user);
-            navigate("/home")
+            navigate("/login")
         }
     }
     catch(error){

@@ -29,7 +29,7 @@ export default function SideMenu({activeMenu}){
                      alt="Profile Image"
                      className="w-16 h-16 rounded-full object-cover mb-3"
                      /> ): <CharAvatar
-                     fullName={fullName}
+                     fullName={user?.fullName}
                      width="w-20"
                      height="h-20"
                      style="text-xl"/>
