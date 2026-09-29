@@ -8,17 +8,17 @@ export const API_PATHS = {
         FOUND_USER:"/api/auth/founduser"
     },
     DASHBOARD:{
-        GET_DASHBOARD:"api/dashboard/"
+        GET_DASHBOARD:"/api/dashboard"
     },
     INCOME :{
         ADD_INCOME :"/api/income/addincome",
-        FIND_ALLINCOME : "/api/income/findallIncomes",
+        FIND_ALLINCOME : "/api/income/findAllIncomes",
         DELETE_INCOME : (incomeID)=>`/api/income/delete/${incomeID}`,
         DOWNLOAD_EXCELL : "/api/income/excellDownload",
     },
     EXPENSE :{
          ADD_EXPENSE :"/api/expense/addExpense",
-        FIND_ALLEXPENSE : "/api/expense/findallExpense",
+        FIND_ALLEXPENSE : "/api/expense/findAllExpense",
         DELETE_EXPENSE : (expenseID)=>`/api/expense/deleteExpense/${expenseID}`,
         DOWNLOAD_EXCELL : "/api/expense/downloadExcell",
     },

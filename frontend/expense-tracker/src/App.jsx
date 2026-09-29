@@ -31,7 +31,7 @@ return (
 
 const Root=()=>{
   //check if the token is recieved or not
-  const isAuthoRized = localStorage.getItem("Token");
+  const isAuthoRized = localStorage.getItem("token") || localStorage.getItem("Token");
 
   //check if the token is present then go to home and if not then go to login
   return isAuthoRized ? (

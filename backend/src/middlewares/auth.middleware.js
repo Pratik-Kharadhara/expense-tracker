@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/User');
 
 const authMiddleWare=async (req,res,next)=>{
-    //check if there is token or not
-        const token = req.cookies.token;
+        const token = req.cookies?.token || (req.headers.authorization && req.headers.authorization.startsWith("Bearer ") ? req.headers.authorization.split(" ")[1] : req.headers.authorization);
 
         if(!token){
             return res.status(401).json({
