@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import DashBoardLayout from "../../components/layout/DashBoardLayout";
 import { useUserAuth } from "../../hooks/useUserAuth";
@@ -7,34 +7,16 @@ import { API_PATHS } from "../../utils/apiPath";
 import InfoCard from "../../components/Cards/InfoCard";
 import RecentTransactions from "../../components/Cards/RecentTransactions";
 import FinancialOverview from "../../components/Cards/FinancialOverview";
+import Last30DaysExpenses from "../../components/Cards/Last30DaysExpenses";
+import Last60DaysIncome from "../../components/Cards/Last60DaysIncome";
 import { formatAmount } from "../../utils/helper";
 import { LuCreditCard, LuWalletMinimal, LuHandCoins, LuRefreshCw } from "react-icons/lu";
 
 export default function Home() {
     useUserAuth();
     const navigate = useNavigate();
-    // Default state pre-populated with reference values so page always displays seamlessly
-    const [dashboard, setDashboard] = useState({
-        totalBalance: 5300,
-        totalIncome: 5600,
-        totalExpense: 0,
-        recentTransaction: [
-            {
-                _id: "demo_1",
-                source: "Salary",
-                amount: 5600,
-                date: "2025-02-01T00:00:00.000Z",
-                type: "Income"
-            },
-            {
-                _id: "demo_2",
-                source: "Rent",
-                amount: 300,
-                date: "2025-02-01T00:00:00.000Z",
-                type: "Expense"
-            }
-        ]
-    });
+
+    const [dashboard, setDashboard] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isLive, setIsLive] = useState(false);
 
@@ -58,9 +40,35 @@ export default function Home() {
         fetchDashboardData();
     }, []);
 
+    // Filter/map expense transactions for Row 3
+    const expenseTransactions = useMemo(() => {
+        if (dashboard?.last30daysExpense?.transactions?.length > 0) {
+            return dashboard.last30daysExpense.transactions.map((t) => ({
+                ...t,
+                type: "Expense"
+            }));
+        }
+        return (dashboard?.recentTransaction || [])
+            .filter((t) => t.type === "Expense")
+            .map((t) => ({ ...t, type: "Expense" }));
+    }, [dashboard]);
+
+    // Filter/map income transactions for Row 4
+    const incomeTransactions = useMemo(() => {
+        if (dashboard?.last60daysIncomeList?.transactions?.length > 0) {
+            return dashboard.last60daysIncomeList.transactions.map((t) => ({
+                ...t,
+                type: "Income"
+            }));
+        }
+        return (dashboard?.recentTransaction || [])
+            .filter((t) => t.type === "Income")
+            .map((t) => ({ ...t, type: "Income" }));
+    }, [dashboard]);
+
     return (
         <DashBoardLayout activeMenu="Dashboard">
-            <div className="space-y-6 max-w-6xl mx-auto pb-10">
+            <div className="space-y-6 max-w-6xl mx-auto pb-12">
                 {/* Header title area */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
@@ -89,7 +97,7 @@ export default function Home() {
                     </div>
                 )}
 
-                {/* 3 Metric Cards */}
+                {/* Row 1: 3 Metric Cards */}
                 {loading && !dashboard ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {[1, 2, 3].map((i) => (
@@ -128,24 +136,50 @@ export default function Home() {
                     </div>
                 )}
 
-                {/* Main Content: Recent Transactions + Financial Overview */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    {/* Recent Transactions Section */}
-                    <div className="lg:col-span-7">
-                        <RecentTransactions
-                            transactions={dashboard?.recentTransaction || []}
-                            onSeeAll={() => navigate("/expense")}
-                        />
-                    </div>
+                {/* Row 2: Recent Transactions (Left) + Financial Overview (Right) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                    <RecentTransactions
+                        title="Recent Transactions"
+                        transactions={dashboard?.recentTransaction || []}
+                        onSeeAll={() => navigate("/expense")}
+                        emptyMessage="No recent transactions found."
+                    />
+                    <FinancialOverview
+                        totalBalance={dashboard?.totalBalance ?? 0}
+                        totalIncome={dashboard?.totalIncome ?? 0}
+                        totalExpense={dashboard?.totalExpense ?? 0}
+                    />
+                </div>
 
-                    {/* Financial Overview Donut Chart Section */}
-                    <div className="lg:col-span-5">
-                        <FinancialOverview
-                            totalBalance={dashboard?.totalBalance ?? 0}
-                            totalIncome={dashboard?.totalIncome ?? 0}
-                            totalExpense={dashboard?.totalExpense ?? 0}
-                        />
-                    </div>
+                {/* Row 3: Expenses (Left) + Last 30 Days Expenses [Bar Chart] (Right) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                    <RecentTransactions
+                        title="Expenses"
+                        transactions={expenseTransactions}
+                        onSeeAll={() => navigate("/expense")}
+                        emptyMessage="No recent expenses found."
+                    />
+                    <Last30DaysExpenses
+                        transactions={dashboard?.last30daysExpense?.transactions || []}
+                        total={dashboard?.last30daysExpense?.total ?? 0}
+                    />
+                </div>
+
+                {/* Row 4: Last 60 Days Income [Pie Chart] (Left) + Income (Right) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                    <Last60DaysIncome
+                        transactions={dashboard?.last60daysIncomeList?.transactions || []}
+                        total={
+                            dashboard?.last60daysIncomeList?.total ??
+                            (dashboard?.totalIncome ?? 0)
+                        }
+                    />
+                    <RecentTransactions
+                        title="Income"
+                        transactions={incomeTransactions}
+                        onSeeAll={() => navigate("/income")}
+                        emptyMessage="No recent income found."
+                    />
                 </div>
             </div>
         </DashBoardLayout>

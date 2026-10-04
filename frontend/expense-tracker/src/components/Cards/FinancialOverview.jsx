@@ -46,7 +46,7 @@ export default function FinancialOverview({
     };
 
     return (
-        <div className="bg-white rounded-2xl p-5 md:p-6 border border-[#EBE4DC] shadow-[0_4px_20px_rgba(60,40,20,0.03)] flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-5 md:p-6 border border-[#EBE4DC] shadow-[0_4px_20px_rgba(60,40,20,0.03)] flex flex-col justify-between h-full">
             <h3 className="text-lg md:text-xl font-bold text-[#3D2617] mb-2">
                 Financial Overview
             </h3>
