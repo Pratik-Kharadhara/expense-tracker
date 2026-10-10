@@ -8,11 +8,14 @@ import Expense from './pages/dashboard/Expense'
 import Income from './pages/dashboard/Income'
 import UserProvider from './context/UserContext'
 
+import { Toaster } from "react-hot-toast";
+
 export default function App() {
 return (
  
   <UserProvider>
  <div>
+       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
        
          <Routes>
             <Route path='/' element={<Root/>}/>
