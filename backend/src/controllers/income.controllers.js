@@ -8,9 +8,9 @@ const addIncome = async (req,res)=>{
             const { icon ,source,amount,date } = req.body ;
 
             if(!icon || !source || !amount || !date){
-                res.status(400).json({
+                return res.status(400).json({
                     message:"ALL FIELDS REQUIRED"
-                })
+                });
             }
             
             const createIncome = await incomeModel.create({

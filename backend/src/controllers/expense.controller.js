@@ -7,7 +7,7 @@ const addExpense = async (req,res)=>{
         const {icon , source , amount ,date} = req.body;
 
         if(!icon || !source || !amount || !date){
-              res.status(400).json({
+              return res.status(400).json({
                      message:"all the field is required"
               })
         }
@@ -69,15 +69,14 @@ try{
 
 
 const excellExpense = async (req,res)=>{
-      const userID = req.user.id
-      try{
-            const expense = (await expenseModel.find({userID})).sort({Date:-1})
-            const data = expense.map((exp)=>{
-                  Date:exp.date;
-                  Amount:exp.amount;
-                  Source:exp.source
-                  
-            })
+      const userID = req.user.id;
+      try {
+        const expense = await expenseModel.find({userID}).sort({date:-1});
+        const data = expense.map((exp)=>({
+            Date: exp.date,
+            Amount: exp.amount,
+            Source: exp.source
+        }));
         
       const wb = xlsx.utils.book_new();
       const ws = xlsx.utils.json_to_sheet(data);
